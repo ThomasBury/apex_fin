@@ -1,0 +1,49 @@
+site_name: apex-fin
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+    - scheme: default
+      primary: amber
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+watch: [mkdocs.yml, src/apex_fin]
+
+plugins:
+  - search
+  - gen-files:
+      scripts:
+        - scripts/gen_ref_pages.py
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            show_source: true
+            show_root_heading: true
+            merge_init_into_class: true
+          paths: [src]
+
+
+# hooks: [scripts/hooks.py]
+
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - How-To Guide: how_to.md
+  - Configuration: configuration.md
+  - Customizing Prompts: prompts_customization.md
+  - Data: data_fetching.md
+  - API:
+      - Overview: api.md
+      - Reference:
+          - Agents: reference/apex_fin/agents/index.md
+          - Models: reference/apex_fin/models/index.md
+          - Teams:  reference/apex_fin/teams/index.md

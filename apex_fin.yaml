@@ -1,0 +1,42 @@
+llm:
+  model: "gemini/gemini-2.0-flash"  # gemini/gemini-2.5-flash-preview-05-20
+  base_url: "https://generativelanguage.googleapis.com/v1beta"  # Optional URL
+
+report:
+  markdown_template_path: "custom_templates/report_template.md"  # Optional path for custom report template
+  enable_polishing: true  # Whether to run the polishing agent on the full report
+  include_context: true # Whether to include the contextual risk assessment section
+
+prompts:
+  team: "custom_prompts/team.txt"  # Optional path to custom team prompt
+  analysis: "custom_prompts/analysis.txt"  # Optional path to custom analysis prompt
+  comparison: "custom_prompts/comparison.txt"  # Optional path to custom comparison prompt
+  evaluation: "custom_prompts/evaluation.txt"  # Optional path to custom evaluation prompt
+  news: "custom_prompts/news.txt"  # Optional path to custom news prompt
+
+risk:
+  enabled: ["macroeconomic", "geopolitical", "climate", "regulatory"]
+
+  guidelines:
+    macroeconomic: |
+      - Interest rate sensitivity
+      - FX volatility
+      - Inflation and central bank policy
+    geopolitical: |
+      - Policy instability
+      - Regional conflicts or sanctions
+      - Global supply chain disruptions
+    climate: |
+      - Carbon emissions exposure
+      - Physical climate risk (drought, flooding)
+      - Regulatory ESG disclosure risk
+    regulatory: |
+      - Ongoing compliance obligations
+      - Risk of new sectoral regulation
+      - Dependency on licensed operations
+
+  tools:
+    macroeconomic: ["DuckDuckGoTools"]
+    geopolitical: ["DuckDuckGoTools"]
+    climate: ["DuckDuckGoTools", "ThinkingTools"]
+    regulatory: ["DuckDuckGoTools"]
