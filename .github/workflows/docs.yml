@@ -28,7 +28,7 @@ jobs:
 
     - name: Build documentation
       run: |
-        mkdocs build
+        uv run mkdocs build
 
     - name: Deploy to GitHub Pages
       run: |
