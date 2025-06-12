@@ -2,7 +2,7 @@ import logging
 from agno.agent import Agent
 from agno.team import Team
 from apex_fin.config import settings
-from apex_fin.agents.analysis_agent import build_analysis_agent, _fetch_financial_data_for_agent
+from apex_fin.agents.analysis_agent import build_auto_analysis_agent, _fetch_financial_data_for_agent
 from apex_fin.agents.comparison_agent import compare_company
 from apex_fin.agents.thinking_agent import build_thinking_agent
 from apex_fin.agents.news_agent import get_financial_news
@@ -29,7 +29,7 @@ def build_full_report(ticker: str) -> str:
     
     ticker, company_name = validate_and_get_ticker(ticker)
     
-    analysis_agent = build_analysis_agent()
+    analysis_agent = build_auto_analysis_agent()
     # The comparison_agent is built and used within the compare_company function
     thinking_agent = build_thinking_agent(ticker)
     polishing_agent = (

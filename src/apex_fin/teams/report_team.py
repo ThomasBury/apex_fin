@@ -3,10 +3,9 @@ from agno.team.team import Team
 from agno.tools.thinking import ThinkingTools
 from agno.models.litellm import LiteLLM 
 
-# from apex_fin.agents.analysis_agent import build_analysis_agent
-from apex_fin.agents.analysis_agent import _fetch_financial_data_for_agent, build_auto_analysis_agent
+from apex_fin.agents.analysis_agent import build_auto_analysis_agent
 from apex_fin.agents.comparison_agent import build_comparison_agent
-from apex_fin.agents.news_agent import build_financial_news_agent # Corrected import name
+from apex_fin.agents.news_agent import build_financial_news_agent
 from apex_fin.agents.thinking_agent import build_thinking_agent
 from apex_fin.agents.evaluation_agent import build_evaluation_agent
 from apex_fin.prompts.team_instructions import TEAM_PROMPT

@@ -5,7 +5,7 @@ Refinement Agent that runs a generation-evaluation loop to improve output qualit
 import logging
 from typing import Callable
 from agno.agent import RunResponse, Agent
-from apex_fin.agents.analysis_agent import build_analysis_agent
+from apex_fin.agents.analysis_agent import build_auto_analysis_agent
 from apex_fin.agents.evaluation_agent import build_evaluation_agent, EvaluationFeedback
 
 logger = logging.getLogger(__name__)
@@ -62,7 +62,7 @@ def generate_refined_section(
     generator_fn : Callable[[str], str], optional
         A function that takes a ticker string as input and returns a string
         representing the generated report section. If None, a default
-        markdown analysis agent (`build_analysis_agent()`)
+        markdown analysis agent (`build_auto_analysis_agent()`)
         will be used. Defaults to None.
     section_name : str, optional
         A descriptive name for the section being generated (e.g.,
@@ -80,7 +80,7 @@ def generate_refined_section(
         is reached without passing.
     """
     # Default to markdown version of the analysis agent
-    analysis_agent = build_analysis_agent()
+    analysis_agent = build_auto_analysis_agent()
     evaluation_agent = build_evaluation_agent()
 
     generator = generator_fn or (lambda ticker: run_agent(analysis_agent, ticker))

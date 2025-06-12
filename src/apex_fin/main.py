@@ -9,7 +9,7 @@ import functools
 from typing import Optional, Any, Callable
 
 # Agent and Team builders
-from apex_fin.agents.analysis_agent import build_analysis_agent, _fetch_financial_data_for_agent
+from apex_fin.agents.analysis_agent import build_auto_analysis_agent, _fetch_financial_data_for_agent
 from apex_fin.agents.comparison_agent import compare_company
 from apex_fin.agents.full_report_agent import build_full_report
 from apex_fin.agents.thinking_agent import build_thinking_agent
@@ -185,7 +185,7 @@ def analyze(ticker: str) -> None:
         raise typer.Exit(code=1)
 
     typer.echo(f"Running analysis for {safe_ticker}...")
-    agent = build_analysis_agent()
+    agent = build_auto_analysis_agent()
     response = agent.run(input_json_str) # Pass the pre-fetched JSON data string
     typer.echo(_get_content_from_result(response))
 

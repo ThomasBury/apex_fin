@@ -96,7 +96,7 @@ def _get_financial_summary(ticker: str) -> str:
     """Generates a financial summary for a ticker using the analysis agent.
 
     This function first pre-fetches financial data for the given ticker.
-    Then, it uses the `build_analysis_agent` to create and run an analysis
+    Then, it uses the `build_auto_analysis_agent` to create and run an analysis
     agent on this data. The content of the analysis agent's response is
     returned as the financial summary.
 
