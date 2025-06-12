@@ -7,14 +7,15 @@ It solves the challenge of transforming raw financial data into actionable, well
 
 **Key Capabilities:**
 
-- Ingests data from multiple sources (YahooFinance API, web search)
+- Ingests data from multiple sources (YahooFinance API, web search and can be extended easily using `Tools`)
 - Extracts, normalizes, and analyzes financial information
 - Generates comprehensive, customizable reports (Markdown)
 - Supports agentic workflows and LLM-powered reasoning
+- Configurable, using a `yaml`master file (risks to analyse, prompts, style, tools, model), see Features and Extensibility
 
 ### Intended Audience
 
-- Financial analysts  
+- Financial analysts and Finance enthousiasts
 - Data engineers & developers  
 - Business intelligence teams
 
@@ -28,20 +29,21 @@ The report-building pipeline consists of:
 4. **Templating & Report Generation:** Modular templates, agent orchestration, LLM-driven sections
 5. **Output:** Markdown, JSON, PDF, or custom formats
 
-```mermaid
+``` mermaid
 flowchart TD
-    A[Ticker Input] --> B{Data Fetch Financial Data}
+    A[Ticker or company Input] --> AA[Ticker look up and validation]
+    AA --> B[Data Fetch Financial Data]
     B --> C[Analysis Agent]
     B --> D[Comparison Agent]
     B --> E[Thinking Agent]
     B --> F[News Agent]
 
-    C --> G[Assemble Raw Report]
+    C --> G[Editor Agent]
     D --> G
     E --> G
     F --> G
 
-    G --> H{Polishing Agent Optional}
+    G --> H[Polishing Agent Optional]
     H --> I[Final Report Output]
     G --> I
 ```
@@ -68,20 +70,20 @@ All commands support `--config` for custom YAML, and `--output` for file export.
 
 | Module / Subpackage         | Purpose / Key Classes & Functions                                   | Integration Points                | API Reference                                                                                                                               |
 |-----------------------------|---------------------------------------------------------------------|-----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
-| `agents/`                   | Specialized agents for analysis, comparison, reasoning              | Used by CLI and teams             | [agents/index.md](./reference/apex_fin/agents/index.md)                                                                                     |
-| &nbsp;&nbsp;`analysis_agent`| [`build_analysis_agent`](./reference/apex_fin/agents/analysis_agent/#build_analysis_agent), core financial analysis | Consumes parsed data              | [analysis_agent.md](./reference/apex_fin/agents/analysis_agent.md)                                                                          |
-| &nbsp;&nbsp;`comparison_agent`| [`compare_company`](./reference/apex_fin/agents/comparison_agent/#compare_company), benchmarks vs. competitors | Uses extracted peer data          | [comparison_agent.md](./reference/apex_fin/agents/comparison_agent.md)                                                                      |
-| &nbsp;&nbsp;`thinking_agent`| [`build_thinking_agent`](./reference/apex_fin/agents/thinking_agent/#build_thinking_agent), contextual/macro risk analysis | Invoked in `think`/team reports   | [thinking_agent.md](./reference/apex_fin/agents/thinking_agent.md)                                                                          |
-| &nbsp;&nbsp;`full_report_agent`| [`build_full_report`](./reference/apex_fin/agents/full_report_agent/#build_full_report), orchestrates sequential report generation | Used by `fullreport` command      | [full_report_agent.md](./reference/apex_fin/agents/full_report_agent.md)                                                                    |
-| `models/`                   | Data schemas (e.g., [`ReportSchema`](./reference/apex_fin/models/report_schema/#ReportSchema)) | Shared across agents              | [models/index.md](./reference/apex_fin/models/index.md)                                                                                     |
-| `prompts/`                  | Instruction templates for LLMs                                     | Customizable per agent            | [prompts/index.md](./reference/apex_fin/prompts/index.md)                                                                                   |
-| `teams/`                    | Multi-agent orchestration, team logic                              | Used by `teamreport` (experimental) | [teams/index.md](./reference/apex_fin/teams/index.md)                                                                                       |
-| `config.py`                 | Loads `.env` and YAML config, merges settings ([`MergedSettings`](./reference/apex_fin/config/#MergedSettings)) | Used globally                     | [config.md](./reference/apex_fin/config.md)                                                                                                 |
-| `main.py`                   | Typer CLI, command routing                                         | Entry point                       | [main.md](./reference/apex_fin/main.md)                                                                                                     |
+| `agents/`                   | Specialized agents for analysis, comparison, reasoning              | Used by CLI and teams             | [agents/index.md](reference/apex_fin/agents/index.md)                                                                                       |
+| &nbsp;&nbsp;`analysis_agent`| Core financial analysis                                            | Consumes parsed data              | [analysis_agent.md](reference/apex_fin/agents/analysis_agent.md)                                                                            |
+| &nbsp;&nbsp;`comparison_agent`| Benchmarks vs. competitors                                       | Uses extracted peer data          | [comparison_agent.md](reference/apex_fin/agents/comparison_agent.md)                                                                        |
+| &nbsp;&nbsp;`thinking_agent`| Contextual/macro risk analysis                                     | Invoked in `think`/team reports   | [thinking_agent.md](reference/apex_fin/agents/thinking_agent.md)                                                                            |
+| &nbsp;&nbsp;`full_report_agent`| Orchestrates sequential report generation                       | Used by `fullreport` command      | [full_report_agent.md](reference/apex_fin/agents/full_report_agent.md)                                                                      |
+| `models/`                   | Data schemas                                                       | Shared across agents              | [models/index.md](reference/apex_fin/models/index.md)                                                                                       |
+| `prompts/`                  | Instruction templates for LLMs                                     | Customizable per agent            | [prompts/index.md](reference/apex_fin/prompts/index.md)                                                                                     |
+| `teams/`                    | Multi-agent orchestration, team logic                              | Used by `teamreport` (experimental) | [teams/index.md](reference/apex_fin/teams/index.md)                                                                                         |
+| `config.py`                 | Loads `.env` and YAML config, merges settings                      | Used globally                     | [config.md](reference/apex_fin/config.md)                                                                                                   |
+| `main.py`                   | Typer CLI, command routing                                         | Entry point                       | [main.md](reference/apex_fin/main.md)                                                                                                       |
 
 ## 🔧 Features & Extensibility
 
-- **Multi-Source Input:** Easily add new data connectors (PDF, API, DB)
+- **Multi-Source Input:** Easily add new data connectors as Agents' `Tools` (PDF, API, DB)
 - **LLM Integration:** Swap LLM providers (OpenAI, Gemini, Azure) via config
 - **Bounding Box/Field Extraction:** Supports OCR and spatial data (if enabled)
 - **Config-Driven Pipelines:** Enable/disable agents, customize prompts, set thresholds
@@ -97,5 +99,5 @@ All commands support `--config` for custom YAML, and `--output` for file export.
 
 ## Reference
 
-- [API Reference](./api.md)
-- [Module Details](./overview.md)
+- [API Reference](api.md)
+- [Module Details](overview.md)

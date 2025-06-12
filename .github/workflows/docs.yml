@@ -31,7 +31,6 @@ jobs:
          mkdocs-gen-files \ 
          mkdocstrings[python] \
          mkdocs-literate-nav \
-         mkdocs-git-revision-date-localized-plugin \
-         mkdocs-git-authors-plugin \
+         mkdocs-minify-plugin \
+         mkdocs-mermaid2-plugin \
       - run: mkdocs gh-deploy --force
-      

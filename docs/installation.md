@@ -6,7 +6,7 @@ This guide provides instructions on how to set up and configure the `apex-fin` p
 
 1. **Clone the repository:**
 
-    ```bash
+    ``` bash
     git clone https://github.com/your-org/apex_fin.git
     cd apex_fin
     ```
@@ -16,7 +16,7 @@ This guide provides instructions on how to set up and configure the `apex-fin` p
 2. **Install dependencies:**
     Use `uv` to synchronize the project's dependencies based on the `pyproject.toml` file.
 
-    ```bash
+    ``` bash
     uv sync
     ```
 
